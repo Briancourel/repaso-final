@@ -35,7 +35,7 @@ namespace repaso_final
 
         static Alumno[] nombres = new Alumno[6];
         static string[] materias = { "programacion", "matematica", "sistemas operativos", "base de datos" };
-        static int[,] notas = new int[materias.Length, 6];
+        static int[,] notas = new int[materias.Length, nombres.Length];
         static int opcion;
 
         static void MenuyManejo()
@@ -54,24 +54,26 @@ namespace repaso_final
                 Console.WriteLine("7. Salir");
                 Console.Write("Seleccione una opción: ");
 
-              
+
                 if (int.TryParse(Console.ReadLine(), out opcion) && opcion >= 1 && opcion <= 7)
                 {
-                   break;
+                    switch (opcion)
+                    {
+                        case 1: CargarNombres(nombres); break;
+                        case 2: OrdenarNombres(nombres); break;
+                        case 3: IngresarNotas(nombres); break;
+                        case 4: MostrarNotas(nombres); break;
+                        case 5: ConvertirAListaDinamica(nombres); break;
+                        case 6: CalcularPromedios(nombres); break;
+                        case 7: Console.WriteLine("Saliste del programa"); break;
+                    }
                 }
-                Console.WriteLine("Opción inválida. Por favor, ingrese un número entre 1 y 7.");
-
-                switch (opcion)
+                else
                 {
-                    case 1: CargarNombres(nombres); break;
-                    case 2: OrdenarNombres(nombres); break;
-                    case 3: IngresarNotas(nombres); break;
-                    case 4: MostrarNotas(nombres); break;
-                    case 5: ConvertirAListaDinamica(nombres); break;
-                    case 6: CalcularPromedios(nombres); break;
-                    case 7: Console.WriteLine("saliste del programa"); break;
-                   
+                    Console.WriteLine("Opción inválida. Por favor, ingrese un número entre 1 y 7.");
                 }
+
+
             }while(opcion != 7);
         }
 
@@ -115,7 +117,8 @@ namespace repaso_final
 
             static void IngresarNotas(Alumno[] nombres)
             {
-                for (int i = 0; i < nombres.Length; i++)
+            
+            for (int i = 0; i < nombres.Length; i++)
                 {
                     Console.WriteLine($"Ingresar notas para el alumno: {nombres[i].Nombre}");
 
@@ -129,9 +132,10 @@ namespace repaso_final
                         Console.WriteLine("nota ingresada invalida se tomara como 0");
                         nota = 0;
                     }
-
-                        // Asignar notas según el índice de la materia
-                        switch (j)
+                    // Almacenar la nota en la matriz
+                    notas[j, i] = nota;
+                    // Asignar notas según el índice de la materia
+                    switch (j)
                         {
                             case 0: nombres[i].Materia1 = nota; break;
                             case 1: nombres[i].Materia2 = nota; break;
